@@ -1,0 +1,52 @@
+{
+  "name": "aetheris",
+  "version": "1.0.0",
+  "description": "Living Battery & System Biome for Windows 11",
+  "main": "dist-electron/main.js",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build:electron": "esbuild electron/main.ts --bundle --platform=node --format=esm --outfile=dist-electron/main.js --external:electron --external:systeminformation && esbuild electron/preload.ts --bundle --platform=node --format=cjs --outfile=dist-electron/preload.js --external:electron",
+    "build:web": "vite build",
+    "build": "npm run build:web && npm run build:electron",
+    "tray": "powershell -ExecutionPolicy Bypass -WindowStyle Hidden -File ./run_tray.ps1",
+    "start": "npm run build:electron && electron .",
+    "app:dev": "concurrently -k \"vite\" \"wait-on tcp:5173 && npm run build:electron && electron .\""
+  },
+  "keywords": [
+    "battery",
+    "macOS",
+    "cyluma",
+    "windows11",
+    "tray",
+    "threejs",
+    "biome"
+  ],
+  "author": "Javohirbek Asqarov (Jasper)",
+  "license": "MIT",
+  "dependencies": {
+    "canvas-confetti": "^1.9.4",
+    "lucide-react": "^1.49.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "systeminformation": "^5.33.14",
+    "three": "^0.186.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/node": "^26.6.3",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@types/three": "^0.186.0",
+    "@vitejs/plugin-react": "^6.1.1",
+    "autoprefixer": "^10.6.1",
+    "concurrently": "^10.0.5",
+    "electron": "^44.5.1",
+    "esbuild": "^0.28.2",
+    "postcss": "^8.5.28",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.1",
+    "wait-on": "^9.5.1"
+  }
+}
